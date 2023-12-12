@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 import TodoList from './TodoList';
 import Contact from './Contact';
+import './App.css'
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
