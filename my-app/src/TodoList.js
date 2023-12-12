@@ -18,6 +18,7 @@ const TodoList = ({ tasks, addTask, toggleTask, deleteTask }) => {
 
   return (
     <div className="todo-list">
+      <h1>Ma Liste de Tâches</h1>
       {/* Formulaire pour ajouter une nouvelle tâche */}
       <form onSubmit={handleSubmit}>
         <input

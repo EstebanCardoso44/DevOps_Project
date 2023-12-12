@@ -1,18 +1,18 @@
 // App.js
-import './App.css';
+
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';  // Assurez-vous d'avoir 'Routes' dans les imports
+
 import TodoList from './TodoList';
+import Contact from './Contact';
 
 const App = () => {
-  // État local pour gérer la liste des tâches
   const [tasks, setTasks] = useState([]);
 
-  // Fonction pour ajouter une nouvelle tâche à la liste
   const addTask = (task) => {
     setTasks([...tasks, { id: tasks.length + 1, text: task, completed: false }]);
   };
 
-  // Fonction pour marquer une tâche comme terminée
   const toggleTask = (taskId) => {
     setTasks(
       tasks.map((task) =>
@@ -21,17 +21,32 @@ const App = () => {
     );
   };
 
-  // Fonction pour supprimer une tâche de la liste
   const deleteTask = (taskId) => {
     setTasks(tasks.filter((task) => task.id !== taskId));
   };
 
   return (
-    <div className="app">
-      <h1>Ma Liste de Tâches</h1>
-      {/* Passer les fonctions et la liste des tâches au composant TodoList */}
-      <TodoList tasks={tasks} addTask={addTask} toggleTask={toggleTask} deleteTask={deleteTask} />
-    </div>
+    <Router>
+      <div className="app">
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Accueil</Link>
+            </li>
+            <li>
+              <Link to="/contact">Contact</Link>
+            </li>
+          </ul>
+        </nav>
+        <Routes>
+          <Route
+            path="/"
+            element={<TodoList tasks={tasks} addTask={addTask} toggleTask={toggleTask} deleteTask={deleteTask} />}
+          />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </div>
+    </Router>
   );
 };
 
