@@ -28,6 +28,12 @@ const App = () => {
     setTasks(tasks.filter((task) => task.id !== taskId));
   };
 
+  const Footer = () => (
+    <footer className="app-footer">
+      <p>&copy; {new Date().getFullYear()} ToDoList. All rights reserved.</p>
+    </footer>
+  );
+
   return (
     <Router>
       <div className="app">
@@ -42,12 +48,13 @@ const App = () => {
           </ul>
         </nav>
         <Routes>
-      <Route
-        path="/"
-        element={<TodoList tasks={tasks} addTask={addTask} toggleTask={toggleTask} deleteTask={deleteTask} />}
-      />
-      <Route path="/contact" element={<Contact />} />
-    </Routes>
+          <Route
+            path="/"
+            element={<TodoList tasks={tasks} addTask={addTask} toggleTask={toggleTask} deleteTask={deleteTask} />}
+          />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+        <Footer />
       </div>
     </Router>
   );
