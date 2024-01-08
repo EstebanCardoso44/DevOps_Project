@@ -1,17 +1,20 @@
 // App.js
 
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';  // Assurez-vous d'avoir 'Routes' dans les imports
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 import TodoList from './TodoList';
 import Contact from './Contact';
-import './App.css'
+import './App.css';
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
 
-  const addTask = (task) => {
-    setTasks([...tasks, { id: tasks.length + 1, text: task, completed: false }]);
+  const addTask = (task, importance, day) => {
+    setTasks([
+      ...tasks,
+      { id: tasks.length + 1, text: task, completed: false, importance, day }
+    ]);
   };
 
   const toggleTask = (taskId) => {
@@ -24,6 +27,12 @@ const App = () => {
 
   const deleteTask = (taskId) => {
     setTasks(tasks.filter((task) => task.id !== taskId));
+  };
+
+  const sortTasksByDay = (day) => {
+    // Tri des tâches par jour
+    const sortedTasks = tasks.filter((task) => task.day === day);
+    return sortedTasks;
   };
 
   return (
@@ -42,7 +51,7 @@ const App = () => {
         <Routes>
           <Route
             path="/"
-            element={<TodoList tasks={tasks} addTask={addTask} toggleTask={toggleTask} deleteTask={deleteTask} />}
+            element={<TodoList tasks={tasks} addTask={addTask} toggleTask={toggleTask} deleteTask={deleteTask} sortTasksByDay={sortTasksByDay} />}
           />
           <Route path="/contact" element={<Contact />} />
         </Routes>

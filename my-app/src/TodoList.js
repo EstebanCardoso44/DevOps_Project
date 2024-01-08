@@ -1,47 +1,57 @@
 // TodoList.js
 
 import React, { useState } from 'react';
-import TodoItem from './TodoItem';
 
-const TodoList = ({ tasks, addTask, toggleTask, deleteTask }) => {
-  // État local pour gérer la nouvelle tâche à ajouter
+const TodoList = ({ tasks, addTask, toggleTask, deleteTask, sortTasksByDay }) => {
   const [newTask, setNewTask] = useState('');
+  const [taskImportance, setTaskImportance] = useState('');
+  const [taskDay, setTaskDay] = useState('');
 
-  // Fonction pour gérer la soumission du formulaire d'ajout de tâche
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (newTask.trim() !== '') {
-      addTask(newTask);
+  const handleAddTask = () => {
+    if (newTask.trim() !== '' && taskDay !== '') {
+      addTask(newTask, taskImportance, taskDay);
       setNewTask('');
+      setTaskImportance('');
+      setTaskDay('');
     }
   };
 
   return (
-    <div className="todo-list">
+    <div>
       <h1>Ma Liste de Tâches</h1>
-      {/* Formulaire pour ajouter une nouvelle tâche */}
-      <form onSubmit={handleSubmit}>
+      <form>
         <input
           type="text"
-          placeholder="Ajouter une nouvelle tâche"
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
+          placeholder="Nouvelle tâche"
         />
-        <button type="submit">Ajouter</button>
+        <select value={taskDay} onChange={(e) => setTaskDay(e.target.value)}>
+          <option value="" disabled>Sélectionner un jour</option>
+          {['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'].map((day) => (
+            <option key={day} value={day}>{day}</option>
+          ))}
+        </select>
+        <button type="button" onClick={handleAddTask}>Ajouter une tâche</button>
       </form>
 
-      {/* Liste des tâches */}
-      <ul>
-        {tasks.map((task) => (
-          // Passer les fonctions de gestion et les détails de la tâche au composant TodoItem
-          <TodoItem
-            key={task.id}
-            task={task}
-            toggleTask={toggleTask}
-            deleteTask={deleteTask}
-          />
-        ))}
-      </ul>
+      {/* Liste des tâches triées par jour */}
+      {['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'].map((day) => (
+        <div key={day}>
+          <h3>{day}</h3>
+          <ul>
+            {sortTasksByDay(day).map((task) => (
+              <li key={task.id}>
+                {/* ... */}
+                <span>{task.text}</span>
+                <span>Importance: {task.importance}</span>
+                <span>Jour: {task.day}</span>
+                {/* ... */}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   );
 };
