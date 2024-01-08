@@ -44,8 +44,8 @@ const TodoList = ({ tasks, addTask, toggleTask, deleteTask, sortTasksByDay }) =>
               <li key={task.id}>
                 {/* ... */}
                 <span>{task.text}</span>
-                <span>Importance: {task.importance}</span>
-                <span>Jour: {task.day}</span>
+                <span> {task.importance}</span>
+                <span> {task.day}</span>
                 {/* ... */}
               </li>
             ))}
