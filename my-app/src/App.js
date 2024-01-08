@@ -7,13 +7,15 @@ import TodoList from './TodoList';
 import Contact from './Contact';
 import './App.css'
 
+
 const App = () => {
   const [tasks, setTasks] = useState([]);
 
   const addTask = (task) => {
-    setTasks([...tasks, { id: tasks.length + 1, text: task, completed: false }]);
+    setTasks([...tasks, { id: tasks.length + 1, text: task.text, completed: false, priority: task.priority }]);
   };
 
+  
   const toggleTask = (taskId) => {
     setTasks(
       tasks.map((task) =>
@@ -40,12 +42,12 @@ const App = () => {
           </ul>
         </nav>
         <Routes>
-          <Route
-            path="/"
-            element={<TodoList tasks={tasks} addTask={addTask} toggleTask={toggleTask} deleteTask={deleteTask} />}
-          />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
+      <Route
+        path="/"
+        element={<TodoList tasks={tasks} addTask={addTask} toggleTask={toggleTask} deleteTask={deleteTask} />}
+      />
+      <Route path="/contact" element={<Contact />} />
+    </Routes>
       </div>
     </Router>
   );

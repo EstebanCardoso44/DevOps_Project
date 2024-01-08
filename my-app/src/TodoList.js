@@ -4,15 +4,15 @@ import React, { useState } from 'react';
 import TodoItem from './TodoItem';
 
 const TodoList = ({ tasks, addTask, toggleTask, deleteTask }) => {
-  // État local pour gérer la nouvelle tâche à ajouter
   const [newTask, setNewTask] = useState('');
+  const [newTaskPriority, setNewTaskPriority] = useState('medium'); // Default priority
 
-  // Fonction pour gérer la soumission du formulaire d'ajout de tâche
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newTask.trim() !== '') {
-      addTask(newTask);
+      addTask({ text: newTask, priority: newTaskPriority });
       setNewTask('');
+      setNewTaskPriority('medium'); // Reset to default priority
     }
   };
 
@@ -27,6 +27,11 @@ const TodoList = ({ tasks, addTask, toggleTask, deleteTask }) => {
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
         />
+        <select onChange={(e) => setNewTaskPriority(e.target.value)} value={newTaskPriority}>
+          <option value="high">Haute</option>
+          <option value="medium">Moyenne</option>
+          <option value="low">Basse</option>
+        </select>
         <button type="submit">Ajouter</button>
       </form>
 
